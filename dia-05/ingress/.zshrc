@@ -1,0 +1,1 @@
+source <(kind completion zsh)

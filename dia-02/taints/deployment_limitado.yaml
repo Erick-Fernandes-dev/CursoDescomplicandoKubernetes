@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  #annotations:
+  name: nginx
+  labels:
+    run: nginx
+  namespace: default
+
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      run: nginx 
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        # resources: 
+        #   limits:
+        #     memory: 512Mi
+        #     # Metade de 1 core
+        #     cpu: "500m"
+        #   requests:
+        #     memory: 256Mi
+        #     cpu: "250m"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+
+
+

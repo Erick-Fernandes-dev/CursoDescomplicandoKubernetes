@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: giropops-cron
+spec:
+  # formato de como escrever um crontabe segue essa sequencia:
+  # (minuto, hora, dia, mês, dia da semana comando) 
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: giropops-cron
+            image: busybox
+            # comando que será executado no container
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Sejba bem vindo ao curso de Kubernetes; sleep 30
+          restartPolicy: OnFailure
+
+# minutos hora dia mes dia-da-semana comando
+# */1 -> qualquer minuto
+# * -> qualquer dia
+# * -> qualquer mês
+# * -> qualquer dia da semana
+# * ->  qualquer comando
+# 10 08 * * 1-5 comando -> executar o comando de segunda a sexta as 08:10
+# 0-59 0-23 1-31 1-12 0-7 
+# */1 1,2 1-10 -> vai executar a cada minuto, nas horas 1 e 2, nos dias 1 a 10

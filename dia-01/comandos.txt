@@ -1,0 +1,63 @@
+
+== Aula 7 - primeiros passos - versao 1.19.3 ==
+
+kubeadm token create --print-join-command
+
+
+fazer um autocomplete do kubectl
+
+kubectl completion bash > /etc
+
+Mas primeiro, veja se esta instalado o bash-completion, caso nao esteja instalado, instale com o seguinte comando:
+
+apt-get install -y bash-completion
+
+redirecionar o completion para o etc
+
+# kubectl completion bash > /etc/bash_completion
+
+forcando ele ler e atualizar a modificacao
+
+source <(kubectl completion bash)
+
+COMANDOS BASICOS
+
+- Um pod e como se fosse uma jaula onde os container compartilham do mesmo namespace e do mesmo IP do POD
+- namespace -> e um lugar isolado, cercadinho da aplicacao
+
+kubectl get pods
+kubectl get pods -n kube-system
+
+
+kubectl describe pods -n kube-system <nomePod>
+kubectl get pods --all-namespace
+kubectl get pods --all-namespace -o wide
+
+kubectl get namespaces
+
+
+
+
+
+
+
+
+
+
+
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  KREW="krew-${OS}_${ARCH}" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" &&
+  ./"${KREW}" install krew
+)
+
+
+
+
+
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys B53DC80D13EDEF05

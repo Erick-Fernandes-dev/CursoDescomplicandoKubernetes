@@ -1,0 +1,98 @@
+/* Reset de estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+}
+
+header {
+    background-color: #ff66b2; /* Cor de fundo rosa */
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+section {
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffeb99; /* Cor de fundo amarelo */
+    border: 1px solid #f0d26c;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #ff66b2; /* Cor de fundo rosa */
+    color: #fff;
+}
+
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #ff66b2; /* Cor de fundo rosa */
+    color: #fff;
+}
+
+
+
+/* Adicione regras de estilo para dispositivos menores, como smartphones */
+@media (max-width: 768px) {
+    main {
+        padding: 10px; /* Reduza o preenchimento */
+    }
+    section {
+        margin: 10px; /* Reduza a margem */
+        padding: 15px; /* Reduza o preenchimento */
+    }
+}
+
+/* Reduza o tamanho da fonte para telas menores */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    p {
+        font-size: 16px;
+    }
+    footer {
+        font-size: 14px;
+    }
+}
+
+
+
+
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.image-container img {
+    width: 30%; /* Define a largura de cada imagem para 30% para criar colunas de 3 em 3 */
+    margin-bottom: 10px;
+}

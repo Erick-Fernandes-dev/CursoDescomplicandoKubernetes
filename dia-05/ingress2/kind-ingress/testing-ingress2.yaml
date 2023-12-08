@@ -1,0 +1,78 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: yoda-app
+  labels:
+    app: yoda
+spec:
+  containers:
+  - command:
+    - /agnhost
+    - netexec
+    - --http-port
+    - "8080"
+    image: registry.k8s.io/e2e-test-images/agnhost:2.39
+    name: yoda-app
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: yoda-service
+spec:
+  selector:
+    app: yoda
+  ports:
+  # Default port used by the image
+  - port: 8080
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: dioday-app
+  labels:
+    app: dioday
+spec:
+  containers:
+  - command:
+    - /agnhost
+    - netexec
+    - --http-port
+    - "8080"
+    image: registry.k8s.io/e2e-test-images/agnhost:2.39
+    name: dioday-app
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dioday-service
+spec:
+  selector:
+    app: dioday
+  ports:
+  # Default port used by the image
+  - port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /yoda
+        backend:
+          service:
+            name: yoda-service
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: /dioday
+        backend:
+          service:
+            name: dioday-service
+            port:
+              number: 8080

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-limitado
+  # Especificar o namespace onde o limitRange foi criado
+  namespace: giropops
+spec:
+  containers:
+    - name: nginx
+      image: nginx

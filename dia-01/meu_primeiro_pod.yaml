@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: nginx
+  namespace: giropops
+spec:
+  containers:
+  - image: nginx
+  # definir a política de pull da imagem do contêiner.
+    imagePullPolicy: Always
+    name: nginx
+    # define a política de DNS do contêiner.
+  dnsPolicy: ClusterFirst
+    # define a política de reinicialização do contêiner.
+  restartPolicy: Always
+  

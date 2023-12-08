@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yoda
+  labels:
+    app: yoda
+spec:
+  containers:
+    - name: yoda-app
+      image: hashicorp/http-echo:latest
+      args:
+        - "-text=CLARO-QUE-FUNCIONA-YODA"
+  imagePullSecrets:
+    - name: dbz
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: yoda-service
+spec:
+  selector:
+    app: yoda
+  ports:
+    - port: 5678
+
+--- 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dioday
+  labels:
+    app: dioday
+spec:
+  containers:
+    - name: dioday-app
+      image: hashicorp/http-echo:latest
+      args:
+        - "-text=FUNCIONOU_DIODAY"
+  imagePullSecrets:
+    - name: dbz
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: dioday-service
+spec:
+  selector:
+    app: dioday
+  ports:
+    - port: 5678
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/yoda"
+        backend:
+          service:
+            name: yoda-service
+            port:
+              number: 5678
+      - pathType: Prefix
+        path: "/dioday"
+        backend:
+          service:
+            name: dioday-service
+            port:
+              number: 5678
+
+
+
+

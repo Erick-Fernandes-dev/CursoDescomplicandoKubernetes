@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: nginx
+  name: meu-nginx
+  namespace: default
+spec:
+  # Especifica o tipo de clusterIp
+  #clusterIP: 10.96.114.95
+  ports:
+  # Porta do serviço
+  - port: 80
+    protocol: TCP
+    # Porta do pod
+    targetPort: 80
+  # Vai definir para quem esse serviço ta funcionando
+  # Para qual deployment esse serviço esta rodando? Para todo deployment que tiver a label app: nginx
+  selector:
+    app: nginx
+  # Cria um ClientIP para o serviço
+  sessionAffinity: ClientIP
+  # Tipo de serviço
+  type: ClusterIP
+
+

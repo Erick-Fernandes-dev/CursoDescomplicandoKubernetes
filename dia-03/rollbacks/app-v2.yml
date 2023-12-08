@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: giropops-v2
+  labels:
+    app: giropops
+    version: "2.0.0"
+spec:
+  replicas: 10
+  # o strategy serve para definir como o kubernetes vai fazer o deploy da aplicação (rollingUpdate, recreate)
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      # maxSurge é a quantidade de pods que podem ser criados a mais do que o número de replicas
+      maxSurge: 5
+      # maxUnavailable é a quantidade de pods que podem ficar indisponíveis durante o deploy
+      maxUnavailable: 5
+  selector:
+    matchLabels:
+      app: giropops
+      version: "2.0.0"
+  template:
+    metadata:
+      labels:
+        app: giropops
+        version: "2.0.0"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "32111"
+    spec:
+      containers:
+      - name: giropops
+        image: linuxtips/nginx-prometheus-exporter:2.0.0
+        env:
+        - name: VERSION
+          value: "2.0.0"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+        ports:
+        - containerPort: 80
+        - containerPort: 32111

@@ -1,0 +1,50 @@
+@startuml kubernetes
+
+footer cluster k8s
+scale max 2048 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+
+actor "User" as userAlias
+left to right direction
+
+' Kubernetes Components
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+    Namespace_Boundary(ns, "default") {
+        KubernetesSvc(svc, "service", "")
+        KubernetesPod(pod1, "web-pod1", "")
+        KubernetesPod(pod2, "web-pod2", "")
+    }
+
+    Namespace_Boundary(ns2, "example") {
+        KubernetesSvc(svc2, "service2", "")
+        KubernetesDeploy(pod3, "pod3", "")
+        KubernetesPod(pod4, "pod4", "")
+    }
+}
+
+Rel(userAlias,svc,"get HTTP/1.1 index.html", "1")
+Rel(svc,pod1,"load Balances", "2")
+Rel(svc,pod2,"load Balances", "2")
+Rel_U(pod1, svc, "serves content", "3")
+Rel(svc, userAlias, "return content to", "4")
+
+
+Rel(svc2, pod3, "NodePort 30000", "2")
+Rel(svc2, pod4, "kibana 5601")
+Rel(pod3, svc2, "alguma")
+
+
+@enduml

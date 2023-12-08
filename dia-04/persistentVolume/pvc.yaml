@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: primeiro-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    # Tamanho do volume que será requisitado pelo pod
+    requests:
+      storage: 800Mi

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-ingress-controller-conf
+  labels:
+    app: nginx-ingress-lb
+data:
+  # Habilitando o vts do neginx, para que ele traga detalhes sobre nginx
+  enable-vts-status: 'true'

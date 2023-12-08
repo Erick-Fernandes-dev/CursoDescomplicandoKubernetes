@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: nginx
+    app: giropops
+  name: terceiro-deployment
+  namespace: default
+spec:
+  replicas: 3
+  # tem que se igualar a label do metadata do deployment passado a cima
+  selector:
+    matchLabels:
+      run: nginx
+  template:
+    metadata:
+      labels:
+        run: nginx
+        dc: UK
+    spec:
+      containers:
+      - name: terceiro-deployment
+        image: nginx
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      # Vai selecionar o node que tiver o label disk: SSD
+      #Senao tiver o label, nao vai subir o pod
+      nodeSelector:
+        disk: SSD

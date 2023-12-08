@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostpath-dp
+  labels:
+    run: nginx
+spec:
+  # tempo de espera para o pod ser considerado morto
+  progressDeadlineSeconds: 600
+  replicas: 1 
+  # Quantidade de revisões que serão mantidas
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      run: nginx
+  # Estratégia de atualização do deployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        # volume que será montado no container
+        volumeMounts:
+          - name: hostpath-pv
+            mountPath: /opt/app
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      # Especificando o volume que será montado no container
+      volumes:
+        - name: hostpath-pv
+          persistentVolumeClaim:
+            claimName: hostpath-pvc
+      # DNS Policy do pod
+      dnsPolicy: ClusterFirst
+      # Reiniciar o pod sempre que ele morrer
+      restartPolicy: Always
+      # scheduler que será utilizado para agendar o pod
+      schedulerName: default-scheduler
+      # Segurança do pod
+      securityContext: {}
+      # maneira de como o pod será finalizado
+      terminationGracePeriodSeconds: 30
+
+  

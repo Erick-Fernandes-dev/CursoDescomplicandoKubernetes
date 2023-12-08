@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-configmap
+  namespace: default
+spec:
+  containers:
+    - image: busybox
+      name: busy-configmap
+      command:
+       - sleep
+       - "3600"
+      env:
+      - name: frutas
+        # vai pegar o valor da chave predileta do configmap cores-frutas
+        valueFrom:
+          # Valor da chave predileta do configmap cores-frutas que será usado na variável frutas
+          configMapKeyRef:
+            name: cores-frutas
+            key: predileta

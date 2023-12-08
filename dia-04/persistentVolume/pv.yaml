@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: primeiro-pv
+spec:
+  # Tamanho do volume
+  capacity:
+    storage: 1Gi
+  # Acesso ao volume (ReadWriteOnce, ReadOnlyMany, ReadWriteMany)  
+  accessModes:
+    - ReadWriteMany
+  # Política de retenção do volume (Retain, Recycle, Delete) 
+  # serve para definir o que acontece com o volume quando o pod é deletado 
+  persistentVolumeReclaimPolicy: Retain
+  # Definindo o tipo do volume (nfs, hostPath, glusterfs, cinder, cephfs, flocker, iscsi, rbd, flexVolume, vsphereVolume, quobyte, azureFile, photonPersistentDisk, portworxVolume, scaleIO, local, storageos)
+  nfs:
+    path: /opt/dados
+    server: 172.18.0.3
+    readOnly: false
