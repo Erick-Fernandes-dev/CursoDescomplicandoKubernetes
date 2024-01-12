@@ -1,0 +1,15 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: myapp-hpa
+spec:
+  # Vai fazer o autoscaling no deployment myapp
+  scaleTargetRef:
+    apiVersion: apps/v1
+    name: myapp
+    kind: Deployment
+  # vai rodar 1 replica no minimo e 15 no maximo
+  minReplicas: 1
+  maxReplicas: 30
+  # porcentagem de uso de cpu para escalar
+  targetCPUUtilizationPercentage: 50

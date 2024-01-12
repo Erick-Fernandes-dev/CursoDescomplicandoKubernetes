@@ -4,14 +4,14 @@ metadata:
   #annotations:
   name: meu-nginx
   labels:
-    run: nginx
+    app: nginx
   namespace: default
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx 
+      app: nginx
   template:
     metadata:
       labels:
@@ -42,7 +42,7 @@ spec:
       protocol: TCP
       targetPort: 80
   selector:
-    run: nginx
+    app: nginx
   sessionAffinity: None
   # Tipo de serviço
   type: NodePort

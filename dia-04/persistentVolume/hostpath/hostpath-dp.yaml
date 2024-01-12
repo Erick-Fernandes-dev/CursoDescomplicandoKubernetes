@@ -30,7 +30,7 @@ spec:
         name: nginx
         # volume que será montado no container
         volumeMounts:
-          - name: hostpath-pv
+          - name: hostpatçh-pv
             mountPath: /opt/app
         resources: {}
         terminationMessagePath: /dev/termination-log

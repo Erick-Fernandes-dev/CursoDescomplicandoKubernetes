@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: wesleywillians/hello-go:v9.6
+        resources:
+          requests:
+            memory: "20Mi"
+            cpu: "0.1"
+          limits:
+            memory: "30Mi"
+            cpu: "0.2"
+        ports:
+        - containerPort: 8000
